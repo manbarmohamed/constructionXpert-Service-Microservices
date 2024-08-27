@@ -3,24 +3,34 @@ package com.task.service;
 import com.task.exception.TaskNotFoundException;
 import com.task.model.Task;
 import com.task.repository.TaskRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class TaskService {
 
     private final TaskRepository taskRepository;
+    private final RestTemplate restTemplate;
+    private static final String PROJECT_SERVICE_URL = "http://project-service/api/projects";
 
-    @Autowired
-    public TaskService(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
+//    @Autowired
+//    public TaskService(TaskRepository taskRepository) {
+//        this.taskRepository = taskRepository;
+//    }
 
     public Task createTask(Task task) {
-        return taskRepository.save(task);
+        Boolean existProject = restTemplate.getForObject(PROJECT_SERVICE_URL+"/"+task.getProjectId()+ "/exist", Boolean.class);
+       if (Boolean.TRUE.equals(existProject)){
+           return taskRepository.save(task);
+       }else {
+           throw new RuntimeException("project not found");
+       }
     }
 
     public List<Task> getAllTasks() {

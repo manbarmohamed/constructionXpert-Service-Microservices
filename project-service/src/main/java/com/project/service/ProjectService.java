@@ -3,7 +3,6 @@ package com.project.service;
 
 import com.project.exception.ProjectNotFoundException;
 import com.project.model.Project;
-import com.project.model.Task;
 import com.project.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,10 +50,4 @@ public class ProjectService {
         projectRepository.deleteById(id);
     }
 
-    @Autowired
-    private TaskClient taskClient;
-
-    public List<Task> getTasksForProject(Long projectId) {
-        return taskClient.getTasksByProjectId(projectId);
-    }
 }
