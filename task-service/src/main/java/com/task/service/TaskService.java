@@ -33,12 +33,15 @@ public class TaskService {
        }
     }
 
+    public List<Task> getTasksByProjectId(Long projectId) {
+        Boolean existProject = restTemplate.getForObject(PROJECT_SERVICE_URL+"/"+projectId+ "/exist", Boolean.class);
+        if (Boolean.TRUE.equals(existProject)){
+            return taskRepository.findByProjectId(projectId);
+        }
+        throw new TaskNotFoundException("No tasks found for project with id: " + projectId);
+    }
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
-    }
-
-    public List<Task> getTasksByProjectId(Long projectId) {
-        return taskRepository.findByProjectId(projectId);
     }
 
     public Optional<Task> getTaskById(Long id) {
