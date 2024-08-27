@@ -2,7 +2,7 @@ package com.project.controller;
 
 
 import com.project.model.Project;
-import com.project.model.Task;
+import com.project.repository.ProjectRepository;
 import com.project.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +15,12 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectService projectService;
+    private final ProjectRepository projectRepository;
 
     @Autowired
-    public ProjectController(ProjectService projectService) {
+    public ProjectController(ProjectService projectService, ProjectRepository projectRepository) {
         this.projectService = projectService;
+        this.projectRepository = projectRepository;
     }
 
     @PostMapping
@@ -37,10 +39,7 @@ public class ProjectController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-    @GetMapping("/{id}/tasks")
-    public ResponseEntity<List<Task>> getProjectTasks(@PathVariable Long id) {
-        return ResponseEntity.ok(projectService.getTasksForProject(id));
-    }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Project> updateProject(@PathVariable Long id, @RequestBody Project projectDetails) {
@@ -51,5 +50,11 @@ public class ProjectController {
     public ResponseEntity<Void> deleteProject(@PathVariable Long id) {
         projectService.deleteProject(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{id}/exist")
+    public ResponseEntity<Boolean> existProject(@PathVariable("id") Long id) {
+        boolean exist = projectRepository.findById(id).isPresent();
+        return ResponseEntity.ok(exist);
     }
 }
