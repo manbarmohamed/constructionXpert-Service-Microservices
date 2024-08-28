@@ -17,7 +17,7 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final RestTemplate restTemplate;
-    private static final String PROJECT_SERVICE_URL = "http://project-service/api/projects";
+    private final String PROJECT_SERVICE_URL = "http://project-service/api/projects";
 
 //    @Autowired
 //    public TaskService(TaskRepository taskRepository) {
@@ -63,5 +63,9 @@ public class TaskService {
 
     public void deleteTask(Long id) {
         taskRepository.deleteById(id);
+    }
+
+    public boolean existTask(Long id) {
+        return taskRepository.existsById(id);
     }
 }

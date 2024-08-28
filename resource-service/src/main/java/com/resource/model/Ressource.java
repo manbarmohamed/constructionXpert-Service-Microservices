@@ -30,4 +30,6 @@ public class Ressource {
 
     @Column(name = "supplier_info", nullable = false)
     private String supplierInfo;
+    @Column(name = "task_id", nullable = false)
+    private Long taskId;
 }
