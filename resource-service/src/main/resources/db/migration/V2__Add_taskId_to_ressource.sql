@@ -1,0 +1,3 @@
+
+ALTER TABLE ressource
+    ADD COLUMN task_id BIGINT NOT NULL;

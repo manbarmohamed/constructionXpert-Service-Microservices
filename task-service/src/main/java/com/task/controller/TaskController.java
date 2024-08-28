@@ -52,4 +52,9 @@ public class TaskController {
         taskService.deleteTask(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/{task_id}/exist")
+    public ResponseEntity<Boolean> existTask(@PathVariable("task_id") Long taskId) {
+        return ResponseEntity.ok(taskService.existTask(taskId));
+    }
 }

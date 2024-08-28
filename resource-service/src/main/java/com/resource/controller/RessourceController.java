@@ -13,38 +13,42 @@ import java.util.List;
 @RequestMapping("/api/Ressources")
 public class RessourceController {
 
-    private final RessourceService RessourceService;
+    private final RessourceService ressourceService;
 
     @Autowired
     public RessourceController(RessourceService RessourceService) {
-        this.RessourceService = RessourceService;
+        this.ressourceService = RessourceService;
     }
 
     @PostMapping
     public ResponseEntity<Ressource> createResource(@RequestBody Ressource Ressource) {
-        return ResponseEntity.ok(RessourceService.createResource(Ressource));
+        return ResponseEntity.ok(ressourceService.createResource(Ressource));
     }
 
     @GetMapping
     public ResponseEntity<List<Ressource>> getAllRessources() {
-        return ResponseEntity.ok(RessourceService.getAllResources());
+        return ResponseEntity.ok(ressourceService.getAllResources());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Ressource> getRessourceById(@PathVariable Long id) {
-        return RessourceService.getResourceById(id)
+        return ressourceService.getResourceById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Ressource> updateRessource(@PathVariable Long id, @RequestBody Ressource RessourceDetails) {
-        return ResponseEntity.ok(RessourceService.updateResource(id, RessourceDetails));
+        return ResponseEntity.ok(ressourceService.updateResource(id, RessourceDetails));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRessource(@PathVariable Long id) {
-        RessourceService.deleteResource(id);
+        ressourceService.deleteResource(id);
         return ResponseEntity.ok().build();
+    }
+    @GetMapping("/getByTask")
+    public ResponseEntity<List<Ressource>> getByTask(@RequestParam Long taskId) {
+        return ResponseEntity.ok(ressourceService.findByTaskId(taskId));
     }
 }
