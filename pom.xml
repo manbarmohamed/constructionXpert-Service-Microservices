@@ -13,6 +13,7 @@
 		<module>project-service</module>
 		<module>task-service</module>
 		<module>resource-service</module>
+		<module>api-gateway</module>
 	</modules>
 
 	<dependencyManagement>
