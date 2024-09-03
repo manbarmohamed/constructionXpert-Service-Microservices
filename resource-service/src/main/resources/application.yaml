@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: ressource-service
+    name: resource-service
   datasource:
     url: jdbc:mysql://localhost:3308/resource_db?createDatabaseIfNotExist=true
     username: root

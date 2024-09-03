@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/Ressources")
+@RequestMapping("/api/resources")
 public class RessourceController {
 
     private final RessourceService ressourceService;
